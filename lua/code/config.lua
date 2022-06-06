@@ -11,4 +11,3 @@ vim.cmd[[
           let g:bookmark_auto_save = 1
 ]]
 --notify
-require("notify")("严伟浩欢迎你")
