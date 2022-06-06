@@ -1,0 +1,5 @@
+require "code"
+require "ui.init"
+require "completion.init"
+require "tools.init"
+require "editor.init"
