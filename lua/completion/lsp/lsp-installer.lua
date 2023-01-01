@@ -1,48 +1,52 @@
-local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
-if not status_ok then
-  vim.notify("nvim-lspconfig not found!")
-  return
-end
+require('mason-tool-installer').setup {
 
--- NOTE: 如果发现某些lsp server安装启动时出现， client exit x and signal 0 等错误
--- 可能是因为node版本过低， 升级node版本即可
--- 升级方法
--- npm cache clean -f
--- npm install -g n
--- n stable
+  -- a list of all tools you want to ensure are installed upon
+  -- start; they should be the names Mason uses for each tool
+  ensure_installed = {
 
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
-  local opts = {
-    on_attach = require("completion.lsp.handlers").on_attach,
-    capabilities = require("completion.lsp.handlers").capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
+    -- you can pin a tool to a particular version
+    { 'golangci-lint', version = 'v1.47.0' },
 
-  if server.name == "clangd" then
-    local clangd_opts = require("completion.lsp.settings.clangd")
-    opts = vim.tbl_deep_extend("force", clangd_opts, opts)
-  end
+    -- you can turn off/on auto_update per tool
+    { 'bash-language-server', auto_update = true },
 
-  if server.name == "jsonls" then
-    local jsonls_opts = require("completion.lsp.settings.jsonls")
-    opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
-  end
+    'lua-language-server',
+    'vim-language-server',
+    'gopls',
+    'stylua',
+    'shellcheck',
+    'editorconfig-checker',
+    'gofumpt',
+    'golines',
+    'gomodifytags',
+    'gotests',
+    'impl',
+    'json-to-struct',
+    'luacheck',
+    'misspell',
+    'revive',
+    'shellcheck',
+    'shfmt',
+    'staticcheck',
+    'vint',
+  },
 
-  if server.name == "sumneko_lua" then
-    local sumneko_opts = require("completion.lsp.settings.sumneko_lua")
-    opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
-  end
+  -- if set to true this will check each tool for updates. If updates
+  -- are available the tool will be updated. This setting does not
+  -- affect :MasonToolsUpdate or :MasonToolsInstall.
+  -- Default: false
+  auto_update = false,
 
-  if server.name == "pyright" then
-    local pyright_opts = require("completion.lsp.settings.pyright")
-    opts = vim.tbl_deep_extend("force", pyright_opts, opts)
-  end
+  -- automatically install / update on startup. If set to false nothing
+  -- will happen on startup. You can use :MasonToolsInstall or
+  -- :MasonToolsUpdate to install tools and check for updates.
+  -- Default: true
+  run_on_start = true,
 
-  -- This setup() function is exactly the same as lspconfig's setup function.
-  -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-  server:setup(opts)
-end)
+  -- set a delay (in ms) before the installation starts. This is only
+  -- effective if run_on_start is set to true.
+  -- e.g.: 5000 = 5 second delay, 10000 = 10 second delay, etc...
+  -- Default: 0
+  start_delay = 3000, -- 3 second delay
+}
+

@@ -67,16 +67,16 @@ return packer.startup(function(use)
   }
   --tree
   use {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
     requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      'nvim-tree/nvim-web-devicons', -- optional, for file icon
     },
     tag = 'nightly' -- optional, updated every week. (see issue #1193)
   }
   use "mbbill/undotree"
   use "simrat39/symbols-outline.nvim" -- outline
   --buffer
-  use {'akinsho/bufferline.nvim',tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
+  use {'akinsho/bufferline.nvim',tag = "v2.*", requires = 'nvim-tree/nvim-web-devicons'}
   use "moll/vim-bbye"
   use "nvim-lualine/lualine.nvim" -- status line
   use {
@@ -115,9 +115,13 @@ return packer.startup(function(use)
   use "L3MON4D3/LuaSnip" --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
   --lsp
+  -- use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+  use "williamboman/mason.nvim" 
+  use "williamboman/mason-lspconfig.nvim"
+  use "WhoIsSethDaniel/mason-tool-installer.nvim"
   use "neovim/nvim-lspconfig" -- enable LSP
-  use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   --use "kosayoda/nvim-lightbulb" -- code action
+  --
   use "ray-x/lsp_signature.nvim" -- show function signature when typing
   use "folke/trouble.nvim"
   --treesitter
